@@ -4,12 +4,13 @@
 
 # Code by Colin T. Kremer & Rachel Prunier
 # Updated 12/22/16
+# Updated along with final revisions 3/24/17
 
 # Written for:
 #
 #   "Isolation by distance and isolation by environment contribute to population differentiation 
 #   in Protea repens (Proteaceae L.), a widespread South African species"
-#         Submitted to AJB.
+#         American Journal of Botany
 
 # This code details the data processing and analyses supporting sections of the above paper, 
 # chiefly the MCMCglmm analyses of the effects of physical and environmental distance on 
@@ -80,15 +81,15 @@ afreq<-read.csv("all_allele_frequencies.csv",stringsAsFactors = F)
 # Environmental/spatial data for each population (not pairwise)
 
 
-# Load environmental PCA scores for each population's location
-envaxes<-read.csv("sample_axes_1997.csv")
-head(envaxes)
+# Load environmental PCA scores and other covariates for each population's location
+covars.dat<-read.csv("./intermediate_data/sample_PCA_and_covars.csv")
 
-# Load physical locations of populations and other covariates
-locs<-read.csv("sample_env_goldblatt.csv")
-#locs$code=c(1:19)
-#names=locs$name
-head(locs)
+# Split this into environmental/PCA variables
+envaxes<-covars.dat[,c("sample_names","Comp.1","Comp.2","Comp.3","Comp.4","Comp.5","Comp.6","Comp.7")]
+
+# ... and physical locations/phytogeographic province of populations 
+locs<-covars.dat[,c('sample_names','LONDD','LATDD','goldblatt')]
+names(locs)[1]<-"name"
 
 # Load table of marker names, fst values, and outlier categories:
 fst.tab<-read.csv("marker_fst_table.csv",stringsAsFactors = F)
