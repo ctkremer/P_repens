@@ -33,9 +33,9 @@ strip <- function(x) {
 read.marker.data <- function(filename) {
   markers <- read.csv(filename, header=TRUE, na.strings=".")
 
-  markers$pop <- as.factor(strip(as.character(markers$indiv)))
+  markers$pop <- as.factor(strip(as.character(markers$names)))
   markers <- subset(markers, pop!="EMPTY")
-  markers$indiv <- NULL
+  markers$names <- NULL
   n.pops <-length(unique(markers$pop))
   n.loci <- ncol(markers)-1
   list(markers=markers, n.pops=n.pops, n.loci=n.loci, n.indivs=nrow(markers))
@@ -92,8 +92,12 @@ set.colors.rb <- function(x, y) {
 
 #### 2. performing MDS analysis on FST of non-outlier markers (figure 2) ####
 
-dat <- read.marker.data("noouts_data.csv")
+## Load data
+dat <- read.marker.data("./intermediate_data/noouts_data.csv")
 
+## Process it
+
+# First individual allele frequencies at each locus
 p <- get.freqs(dat$markers[,1:dat$n.loci])
 p.indiv <- matrix(nrow=dat$n.indivs, ncol=dat$n.loci)
 cat("Calculating individual allele frequencies at each locus...\n")
@@ -103,6 +107,9 @@ for (i in 1:dat$n.indivs) {
     p.indiv[i,j] <- as.numeric(markers[i,j])/2.0
   }
 }
+#p.indiv[1:10,1:8]
+
+# Calculate pairwise ibd distances
 f.dist <- matrix(nrow=dat$n.indivs, ncol=dat$n.indivs)
 cat("Calculating pairwise ibd distances...")
 for (i in 1:(dat$n.indivs-1)) {
@@ -119,6 +126,10 @@ for (i in 1:(dat$n.indivs-1)) {
 }
 f.dist[dat$n.indivs,dat$n.indivs] <- 0.0
 cat("\n")
+#f.dist[1:10,1:8]
+
+
+#### 3. Set up for exploring the results graphically ####
 
 f.mds <- cmdscale(f.dist)
 
@@ -180,7 +191,7 @@ for (i in 1:length(means$pop)) {
 
 
 
-####making figure 2,  green yellow plot ####
+#### 4. Make figure 2,  green/yellow plot ####
 dev.new()
 
 p <- ggplot(indivcolors, aes(x=x, y=y, color= pop, size=data)) +
