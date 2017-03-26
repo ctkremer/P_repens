@@ -36,6 +36,8 @@ More detailed meta-data provided after this list, as files are referenced.
 
 `HapMap.hmc.txt` - number of reads on which each allele call is based
 
+`high_outs.csv` - allele data for all individuals and high outlier loci
+
 `loci_20_v2.csv` - allele data for all individuals and loci (those which passed QC)
 
 `marker_fst_table.csv` - Table of each loci/marker, indicating its Fst and outlier category
@@ -66,7 +68,7 @@ More detailed meta-data provided after this list, as files are referenced.
 
 ### Processing the output of the TASSLE UNEAK pipeline
 
-Initial sequencing output produces data on a large number of loci, but many of these received low coverage, or were present in only a few individuals. The script `processing_hap_map_data.R`, combined with details in the text of the paper, describe how we performed quality control on these data. Specifically, this code takes the output of the UNEAK pipeline (`HapMap.fas.txt`,`HapMap.hmn.txt`,`HapMap.hmc.txt`) and conducts QC, resulting in 2066 markers for 663 individuals (`loci20_v2.csv`). These markers are further subdivided into outliers and non-outliers (based on the results of the outlier analysis, contained in `outliers_columnnumbers.csv`). Non-outliers get used for phylogeographic analyses (MDS, TreeMix, Structure), based on output file created in this script (`noouts_data.csv`). Finally, within this script we calculate allele frequencies for each marker at the level of each population, producing the output file `all_allele_frequencies_032417.csv`
+Initial sequencing output produces data on a large number of loci, but many of these received low coverage, or were present in only a few individuals. The script `processing_hap_map_data.R`, combined with details in the text of the paper, describe how we performed quality control on these data. Specifically, this code takes the output of the UNEAK pipeline (`HapMap.fas.txt`,`HapMap.hmn.txt`,`HapMap.hmc.txt`) and conducts QC, resulting in 2066 markers for 663 individuals (`loci20_v2.csv`). These markers are further subdivided into outliers and non-outliers (based on the results of the outlier analysis, contained in `outliers_columnnumbers.csv`). Non-outliers get used for phylogeographic analyses (MDS, TreeMix, Structure), based on output file created in this script (`noouts_data.csv`).  We assessed measures of diversity in both the high- outliers and non-outliers using Arlequin, based on both`noouts_data.csv` and `high_outs.csv`. Finally, within this script we calculate allele frequencies for each marker at the level of each population, producing the output file `all_allele_frequencies_032417.csv`
 
 This script requires as input the following files, which are archived on Dryad but not github, due to file size restrictions:
 
@@ -134,6 +136,13 @@ This script produces as output the following files:
 	    names = individual names
 	  data columns: one column for each non-outlier marker
 		rows: each row represents one SNP, row labels are the name of each of the 663 individuals that passed QC
+		
+#### `high_outs.csv`
+	This comma separated value file is structured similarly to `loci_20_v2.csv`, but contains only the markers determined to be high outliers within the outlier analysis part of our study. 
+	  information column:
+	    names = individual names
+	  data columns: one column for each high outlier marker
+		rows: each row represents one SNP, row labels are the name of each of the 663 individuals that passed QC
 
 	
 	
@@ -191,9 +200,9 @@ To analyze the effects of environment on population divergence, we needed to cha
 
 ### Phylogeographic analyses
 
-Explorations of the structure of P. repens populations are described in detail in the text, and include MDS, TreeMix, Structure, and arlequin analyses. Most of these are conducted using stand-alone software. The MDS analysis, however, is found in the R script `MDS.R`, and was used to produce figure 2. These analyses required input files including `noouts_data.csv`.
+Explorations of the structure of P. repens populations are described in detail in the text, and include MDS, TreeMix, Structure, and arlequin analyses. Most of these are conducted using stand-alone software. The MDS analysis, however, is found in the R script `MDS.R`, and was used to produce figure 2. These analyses required input files including `noouts_data.csv`, and `high_outs.csv`.
 
-	
+
 ### BLAST analysis
 
 Before blasting sequences against the P. repens transcriptome, we needed to extract fasta files containing only the focal 2066 markers (high, low, and non-outliers). This data processing is detailed in the script `pulling_out_fastas.R`. As input, it requires `HapMap.fas.txt` (see meta-data description above), and `marker_fst_table.csv`.

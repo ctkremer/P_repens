@@ -141,6 +141,7 @@ $(document).ready(function () {
 <p><code>HapMap.fas.txt</code> - fasta files for each SNP identified by the UNEAK SNP calling pipeline</p>
 <p><code>HapMap.hmn.txt</code> - alleles for each individual for each polymorphic locus (SNP) identified by UNEAK</p>
 <p><code>HapMap.hmc.txt</code> - number of reads on which each allele call is based</p>
+<p><code>high_outs.csv</code> - allele data for all individuals and high outlier loci</p>
 <p><code>loci_20_v2.csv</code> - allele data for all individuals and loci (those which passed QC)</p>
 <p><code>marker_fst_table.csv</code> - Table of each loci/marker, indicating its Fst and outlier category</p>
 <p><code>noouts_data.csv</code> - allele data for all individuals and non-outlier loci</p>
@@ -157,7 +158,7 @@ $(document).ready(function () {
 </div>
 <div id="processing-the-output-of-the-tassle-uneak-pipeline" class="section level3">
 <h3>Processing the output of the TASSLE UNEAK pipeline</h3>
-<p>Initial sequencing output produces data on a large number of loci, but many of these received low coverage, or were present in only a few individuals. The script <code>processing_hap_map_data.R</code>, combined with details in the text of the paper, describe how we performed quality control on these data. Specifically, this code takes the output of the UNEAK pipeline (<code>HapMap.fas.txt</code>,<code>HapMap.hmn.txt</code>,<code>HapMap.hmc.txt</code>) and conducts QC, resulting in 2066 markers for 663 individuals (<code>loci20_v2.csv</code>). These markers are further subdivided into outliers and non-outliers (based on the results of the outlier analysis, contained in <code>outliers_columnnumbers.csv</code>). Non-outliers get used for phylogeographic analyses (MDS, TreeMix, Structure), based on output file created in this script (<code>noouts_data.csv</code>). Finally, within this script we calculate allele frequencies for each marker at the level of each population, producing the output file <code>all_allele_frequencies_032417.csv</code></p>
+<p>Initial sequencing output produces data on a large number of loci, but many of these received low coverage, or were present in only a few individuals. The script <code>processing_hap_map_data.R</code>, combined with details in the text of the paper, describe how we performed quality control on these data. Specifically, this code takes the output of the UNEAK pipeline (<code>HapMap.fas.txt</code>,<code>HapMap.hmn.txt</code>,<code>HapMap.hmc.txt</code>) and conducts QC, resulting in 2066 markers for 663 individuals (<code>loci20_v2.csv</code>). These markers are further subdivided into outliers and non-outliers (based on the results of the outlier analysis, contained in <code>outliers_columnnumbers.csv</code>). Non-outliers get used for phylogeographic analyses (MDS, TreeMix, Structure), based on output file created in this script (<code>noouts_data.csv</code>). We assessed measures of diversity in both the high- outliers and non-outliers using Arlequin, based on both<code>noouts_data.csv</code> and <code>high_outs.csv</code>. Finally, within this script we calculate allele frequencies for each marker at the level of each population, producing the output file <code>all_allele_frequencies_032417.csv</code></p>
 <p>This script requires as input the following files, which are archived on Dryad but not github, due to file size restrictions:</p>
 <div id="hapmap.fas.txt" class="section level4">
 <h4><code>HapMap.fas.txt</code></h4>
@@ -229,6 +230,15 @@ rows: populations</code></pre>
   information column:
     names = individual names
   data columns: one column for each non-outlier marker
+    rows: each row represents one SNP, row labels are the name of each of the 663 individuals that passed QC
+    </code></pre>
+</div>
+<div id="high_outs.csv" class="section level4">
+<h4><code>high_outs.csv</code></h4>
+<pre><code>This comma separated value file is structured similarly to `loci_20_v2.csv`, but contains only the markers determined to be high outliers within the outlier analysis part of our study. 
+  information column:
+    names = individual names
+  data columns: one column for each high outlier marker
     rows: each row represents one SNP, row labels are the name of each of the 663 individuals that passed QC</code></pre>
 </div>
 </div>
@@ -285,7 +295,7 @@ information column:
 </div>
 <div id="phylogeographic-analyses" class="section level3">
 <h3>Phylogeographic analyses</h3>
-<p>Explorations of the structure of P. repens populations are described in detail in the text, and include MDS, TreeMix, Structure, and arlequin analyses. Most of these are conducted using stand-alone software. The MDS analysis, however, is found in the R script <code>MDS.R</code>, and was used to produce figure 2. These analyses required input files including <code>noouts_data.csv</code>.</p>
+<p>Explorations of the structure of P. repens populations are described in detail in the text, and include MDS, TreeMix, Structure, and arlequin analyses. Most of these are conducted using stand-alone software. The MDS analysis, however, is found in the R script <code>MDS.R</code>, and was used to produce figure 2. These analyses required input files including <code>noouts_data.csv</code>, and <code>high_outs.csv</code>.</p>
 </div>
 <div id="blast-analysis" class="section level3">
 <h3>BLAST analysis</h3>
