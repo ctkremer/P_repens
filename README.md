@@ -40,7 +40,7 @@ More detailed meta-data provided after this list, as files are referenced.
 
 `loci_20_v2.csv` - allele data for all individuals and loci (those which passed QC)
 
-`marker_fst_table.csv` - Table of each loci/marker, indicating its Fst and outlier category
+`marker_fst_table.csv` - Table of each locus/marker, indicating its Fst and outlier category
 
 `noouts_data.csv` - allele data for all individuals and non-outlier loci
 
@@ -68,17 +68,9 @@ More detailed meta-data provided after this list, as files are referenced.
 
 ### Processing the output of the TASSLE UNEAK pipeline
 
-Initial sequencing output produces data on a large number of loci, but many of these received low coverage, or were present in only a few individuals. The script `processing_hap_map_data.R`, combined with details in the text of the paper, describe how we performed quality control on these data. Specifically, this code takes the output of the UNEAK pipeline (`HapMap.fas.txt`,`HapMap.hmn.txt`,`HapMap.hmc.txt`) and conducts QC, resulting in 2066 markers for 663 individuals (`loci20_v2.csv`). These markers are further subdivided into outliers and non-outliers (based on the results of the outlier analysis, contained in `outliers_columnnumbers.csv`). Non-outliers get used for phylogeographic analyses (MDS, TreeMix, Structure), based on output file created in this script (`noouts_data.csv`).  We assessed measures of diversity in both the high- outliers and non-outliers using Arlequin, based on both`noouts_data.csv` and `high_outs.csv`. Finally, within this script we calculate allele frequencies for each marker at the level of each population, producing the output file `all_allele_frequencies_032417.csv`
+Initial sequencing output produces data on a large number of loci, but many of these received low coverage, or were present in only a few individuals. The script `processing_hap_map_data.R`, combined with details in the text of the paper, describe how we performed quality control on these data. Specifically, this code takes the output of the UNEAK pipeline (`HapMap.hmn.txt`,`HapMap.hmc.txt`) and conducts QC, resulting in 2066 markers for 663 individuals (`loci20_v2.csv`). These markers are further subdivided into outliers and non-outliers (based on the results of the outlier analysis, contained in `outliers_columnnumbers.csv`). Non-outliers get used for phylogeographic analyses (MDS, TreeMix, Structure), based on output file created in this script (`noouts_data.csv`).  We assessed measures of diversity in both the high- outliers and non-outliers using Arlequin, based on both`noouts_data.csv` and `high_outs.csv`. Finally, within this script we calculate allele frequencies for each marker at the level of each population, producing the output file `all_allele_frequencies_032417.csv`
 
 This script requires as input the following files, which are archived on Dryad but not github, due to file size restrictions:
-
-#### `HapMap.fas.txt`
-	This file (not on github) has one column, each SNP is represented by two fastas, one for each allele.  Each fasta has two rows, one with the name beginning with a ">", and one with the sequence of that allele at that marker. 
-		For example: marker TP1 has two fasta files, one the "query" and one the "hit" (i.e. the two different alleles) and each sequence is 64 base long
-			>TP1_query_64
-			TGCAGAAAAAAAAAAAAAAAAACCCGCAGAAAAAAAAAGAGAAGGGCAAGAAGAAATGTTATCT
-			>TP1_hit_64
-			TGCAGAAAAAAAAAAAAAAAAACCCGCAGAAAAAAAAAGAGAAGGGCAAGAAGTAATGTTATCT
 
 #### `HapMap.hmn.txt`
 	This file (not on github) has 11 information columns and then one column for each of the 717 individuals genotyped. There is one row for each SNP, the data in each cell are 0 if the the individual was homozygous for the first allele listed in the allele column, 1 if the individual is heterozygous, and 2 if the individual is homozygous for the second allele listed in the allele column. Missing data points are indicated with a "."
@@ -205,7 +197,16 @@ Explorations of the structure of P. repens populations are described in detail i
 
 ### BLAST analysis
 
-Before blasting sequences against the P. repens transcriptome, we needed to extract fasta files containing only the focal 2066 markers (high, low, and non-outliers). This data processing is detailed in the script `pulling_out_fastas.R`. As input, it requires `HapMap.fas.txt` (see meta-data description above), and `marker_fst_table.csv`.
+Before blasting sequences against the P. repens transcriptome, we needed to extract fasta files containing only the focal 2066 markers (high, low, and non-outliers). This data processing is detailed in the script `pulling_out_fastas.R`. As input, it requires `HapMap.fas.txt` and `marker_fst_table.csv`.
+
+
+#### `HapMap.fas.txt`
+	This file (not on github) has one column, each SNP is represented by two fastas, one for each allele.  Each fasta has two rows, one with the name beginning with a ">", and one with the sequence of that allele at that marker. 
+		For example: marker TP1 has two fasta files, one the "query" and one the "hit" (i.e. the two different alleles) and each sequence is 64 base long
+			>TP1_query_64
+			TGCAGAAAAAAAAAAAAAAAAACCCGCAGAAAAAAAAAGAGAAGGGCAAGAAGAAATGTTATCT
+			>TP1_hit_64
+			TGCAGAAAAAAAAAAAAAAAAACCCGCAGAAAAAAAAAGAGAAGGGCAAGAAGTAATGTTATCT
 
 #### `marker_fst_table.csv`
 	This comma separated value file lists the focal 2066 markers, along with their actual FST estimates and classification as high, low, or non-outliers. This file has three columns, one information column and two data columns on each marker.
@@ -220,7 +221,7 @@ Before blasting sequences against the P. repens transcriptome, we needed to extr
 
 ### IBD vs. IBE regression analyses (Fig. 4 & Supplemental Files)
 	
-For each of the 2066 markers, we fit generalized linear mixed models relating the pairwise genetic distances among populations to environmental and physical distances. We then related the effect sizes characterizing each of the environmental and physical covariates to the FST of each individual marker. (For more details on this novel analysis, see the main text). These analyses are contained in the R script: `P_repens_PopGen_analysis_code.R`. This analysis required several input data sets (`all_allele_frequencies_032417.csv`, `marker_fst_table.csv`, both described above). For convenience, we have also provided several of the intermediate data sets produced in this analysis, as several steps required significant computation time. Starting with these intermediate files, interested readers can jump through the analysis.
+For each of the 2066 markers, we fit generalized linear mixed models relating the pairwise genetic distances among populations to environmental and physical distances. We then related the effect sizes characterizing each of the environmental and physical covariates to the FST of each individual marker. (For more details on this novel analysis, see the main text). These analyses are contained in the R script: `P_repens_PopGen_analysis_code.R`. This analysis required several input data sets (`all_allele_frequencies_032417.csv`, `marker_fst_table.csv`, and `sample_PCA_and_covars.csv`, all described above). For convenience, we have also provided several of the intermediate data sets produced in this analysis, as several steps required significant computation time. Starting with these intermediate files, interested readers can jump through the analysis.
 
 #### `pairwise_population_differences.csv`
 	A data set of the pairwise genetic and environmental distances among populations, calculated as an intermediate data file before MCMCglmm regressions.

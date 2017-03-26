@@ -143,7 +143,7 @@ $(document).ready(function () {
 <p><code>HapMap.hmc.txt</code> - number of reads on which each allele call is based</p>
 <p><code>high_outs.csv</code> - allele data for all individuals and high outlier loci</p>
 <p><code>loci_20_v2.csv</code> - allele data for all individuals and loci (those which passed QC)</p>
-<p><code>marker_fst_table.csv</code> - Table of each loci/marker, indicating its Fst and outlier category</p>
+<p><code>marker_fst_table.csv</code> - Table of each locus/marker, indicating its Fst and outlier category</p>
 <p><code>noouts_data.csv</code> - allele data for all individuals and non-outlier loci</p>
 <p><code>outliers_columnnumbers.csv</code> - FST and column indices for focal markers</p>
 <p><code>pairwise_population_differences.csv</code> - Pairwise genetic and environmental distances among populations</p>
@@ -158,17 +158,8 @@ $(document).ready(function () {
 </div>
 <div id="processing-the-output-of-the-tassle-uneak-pipeline" class="section level3">
 <h3>Processing the output of the TASSLE UNEAK pipeline</h3>
-<p>Initial sequencing output produces data on a large number of loci, but many of these received low coverage, or were present in only a few individuals. The script <code>processing_hap_map_data.R</code>, combined with details in the text of the paper, describe how we performed quality control on these data. Specifically, this code takes the output of the UNEAK pipeline (<code>HapMap.fas.txt</code>,<code>HapMap.hmn.txt</code>,<code>HapMap.hmc.txt</code>) and conducts QC, resulting in 2066 markers for 663 individuals (<code>loci20_v2.csv</code>). These markers are further subdivided into outliers and non-outliers (based on the results of the outlier analysis, contained in <code>outliers_columnnumbers.csv</code>). Non-outliers get used for phylogeographic analyses (MDS, TreeMix, Structure), based on output file created in this script (<code>noouts_data.csv</code>). We assessed measures of diversity in both the high- outliers and non-outliers using Arlequin, based on both<code>noouts_data.csv</code> and <code>high_outs.csv</code>. Finally, within this script we calculate allele frequencies for each marker at the level of each population, producing the output file <code>all_allele_frequencies_032417.csv</code></p>
+<p>Initial sequencing output produces data on a large number of loci, but many of these received low coverage, or were present in only a few individuals. The script <code>processing_hap_map_data.R</code>, combined with details in the text of the paper, describe how we performed quality control on these data. Specifically, this code takes the output of the UNEAK pipeline (<code>HapMap.hmn.txt</code>,<code>HapMap.hmc.txt</code>) and conducts QC, resulting in 2066 markers for 663 individuals (<code>loci20_v2.csv</code>). These markers are further subdivided into outliers and non-outliers (based on the results of the outlier analysis, contained in <code>outliers_columnnumbers.csv</code>). Non-outliers get used for phylogeographic analyses (MDS, TreeMix, Structure), based on output file created in this script (<code>noouts_data.csv</code>). We assessed measures of diversity in both the high- outliers and non-outliers using Arlequin, based on both<code>noouts_data.csv</code> and <code>high_outs.csv</code>. Finally, within this script we calculate allele frequencies for each marker at the level of each population, producing the output file <code>all_allele_frequencies_032417.csv</code></p>
 <p>This script requires as input the following files, which are archived on Dryad but not github, due to file size restrictions:</p>
-<div id="hapmap.fas.txt" class="section level4">
-<h4><code>HapMap.fas.txt</code></h4>
-<pre><code>This file (not on github) has one column, each SNP is represented by two fastas, one for each allele.  Each fasta has two rows, one with the name beginning with a &quot;&gt;&quot;, and one with the sequence of that allele at that marker. 
-    For example: marker TP1 has two fasta files, one the &quot;query&quot; and one the &quot;hit&quot; (i.e. the two different alleles) and each sequence is 64 base long
-        &gt;TP1_query_64
-        TGCAGAAAAAAAAAAAAAAAAACCCGCAGAAAAAAAAAGAGAAGGGCAAGAAGAAATGTTATCT
-        &gt;TP1_hit_64
-        TGCAGAAAAAAAAAAAAAAAAACCCGCAGAAAAAAAAAGAGAAGGGCAAGAAGTAATGTTATCT</code></pre>
-</div>
 <div id="hapmap.hmn.txt" class="section level4">
 <h4><code>HapMap.hmn.txt</code></h4>
 <pre><code>This file (not on github) has 11 information columns and then one column for each of the 717 individuals genotyped. There is one row for each SNP, the data in each cell are 0 if the the individual was homozygous for the first allele listed in the allele column, 1 if the individual is heterozygous, and 2 if the individual is homozygous for the second allele listed in the allele column. Missing data points are indicated with a &quot;.&quot;
@@ -299,7 +290,16 @@ information column:
 </div>
 <div id="blast-analysis" class="section level3">
 <h3>BLAST analysis</h3>
-<p>Before blasting sequences against the P. repens transcriptome, we needed to extract fasta files containing only the focal 2066 markers (high, low, and non-outliers). This data processing is detailed in the script <code>pulling_out_fastas.R</code>. As input, it requires <code>HapMap.fas.txt</code> (see meta-data description above), and <code>marker_fst_table.csv</code>.</p>
+<p>Before blasting sequences against the P. repens transcriptome, we needed to extract fasta files containing only the focal 2066 markers (high, low, and non-outliers). This data processing is detailed in the script <code>pulling_out_fastas.R</code>. As input, it requires <code>HapMap.fas.txt</code> and <code>marker_fst_table.csv</code>.</p>
+<div id="hapmap.fas.txt" class="section level4">
+<h4><code>HapMap.fas.txt</code></h4>
+<pre><code>This file (not on github) has one column, each SNP is represented by two fastas, one for each allele.  Each fasta has two rows, one with the name beginning with a &quot;&gt;&quot;, and one with the sequence of that allele at that marker. 
+    For example: marker TP1 has two fasta files, one the &quot;query&quot; and one the &quot;hit&quot; (i.e. the two different alleles) and each sequence is 64 base long
+        &gt;TP1_query_64
+        TGCAGAAAAAAAAAAAAAAAAACCCGCAGAAAAAAAAAGAGAAGGGCAAGAAGAAATGTTATCT
+        &gt;TP1_hit_64
+        TGCAGAAAAAAAAAAAAAAAAACCCGCAGAAAAAAAAAGAGAAGGGCAAGAAGTAATGTTATCT</code></pre>
+</div>
 <div id="marker_fst_table.csv" class="section level4">
 <h4><code>marker_fst_table.csv</code></h4>
 <pre><code>This comma separated value file lists the focal 2066 markers, along with their actual FST estimates and classification as high, low, or non-outliers. This file has three columns, one information column and two data columns on each marker.
