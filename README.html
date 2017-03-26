@@ -138,7 +138,6 @@ $(document).ready(function () {
 <p>More detailed meta-data provided after this list, as files are referenced.</p>
 <p><code>all_allele_frequencies_032417.csv</code> - Table of allele frequencies (population by marker)</p>
 <p><code>all_coefficient_estimates_combined.csv</code> - Table of all MCMCglmm coefficient estimates</p>
-<p><code>gam_fit_stats_output.csv</code> - Output of GAM fits exploring IBD vs. IBE</p>
 <p><code>HapMap.fas.txt</code> - fasta files for each SNP identified by the UNEAK SNP calling pipeline</p>
 <p><code>HapMap.hmn.txt</code> - alleles for each individual for each polymorphic locus (SNP) identified by UNEAK</p>
 <p><code>HapMap.hmc.txt</code> - number of reads on which each allele call is based</p>
@@ -213,11 +212,16 @@ $(document).ready(function () {
   information columns: 
     the first column contains names of individuals
   data columns: each column contains data on one of 2066 loci.
-    rows: each row represents one SNP, row labels are the name of each of the 663 individuals that passed QC</code></pre>
+    rows: each row represents one SNP, row labels are the name of each of the 663 individuals that passed QC
+    </code></pre>
 </div>
 <div id="all_allele_frequencies_032417.csv" class="section level4">
 <h4><code>all_allele_frequencies_032417.csv</code></h4>
-<p>This comma separated value file, produced by this R script, contains the population-level allele frequencies of each of the 2066 focal markers. information column: pop = the name of each P. repens population considered data columns: one column for each marker. rows: populations</p>
+<pre><code>This comma separated value file, produced by this R script, contains the population-level allele frequencies of each of the 2066 focal markers. 
+information column:
+  pop = the name of each P. repens population considered
+data columns: one column for each marker.
+rows: populations</code></pre>
 </div>
 <div id="noouts_data.csv" class="section level4">
 <h4><code>noouts_data.csv</code></h4>

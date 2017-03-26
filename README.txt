@@ -30,8 +30,6 @@ More detailed meta-data provided after this list, as files are referenced.
 
 `all_coefficient_estimates_combined.csv` - Table of all MCMCglmm coefficient estimates
 
-`gam_fit_stats_output.csv` - Output of GAM fits exploring IBD vs. IBE
-
 `HapMap.fas.txt` - fasta files for each SNP identified by the UNEAK SNP calling pipeline
 
 `HapMap.hmn.txt` - alleles for each individual for each polymorphic locus (SNP) identified by UNEAK
@@ -122,9 +120,9 @@ This script produces as output the following files:
 	    the first column contains names of individuals
 	  data columns: each column contains data on one of 2066 loci.
 		rows: each row represents one SNP, row labels are the name of each of the 663 individuals that passed QC
-
+		
 #### `all_allele_frequencies_032417.csv`
-  This comma separated value file, produced by this R script, contains the population-level allele frequencies of each of the 2066 focal markers. 
+	This comma separated value file, produced by this R script, contains the population-level allele frequencies of each of the 2066 focal markers. 
     information column:
       pop = the name of each P. repens population considered
     data columns: one column for each marker.
