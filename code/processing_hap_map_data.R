@@ -188,8 +188,7 @@ high_outs<-data[,outliers$reallyright[outliers$level=="high"]]
 high_outs<-data.frame(names=data$names, high_outs)
 
 # save high outlier data (if desired)
-#write.table(high_outs, "high_outs_reallright.csv", quote=FALSE, sep=",", row.names=FALSE, col.names=TRUE)
-
+#write.table(high_outs, "./data/high_outs.csv", quote=FALSE, sep=",", row.names=FALSE, col.names=TRUE)
 
 
 
@@ -255,7 +254,7 @@ bobs<-bobs[,c(2,1,seq(3,ncol(bobs),1))]
  #### 4. Make structure files for the outlier loci.  These will be used for arlequin (after being read through PGD spider) ####
   
 ## Continue from above, or read in:
-#high_outs<-read.csv("high_outs_reallright.csv",stringsAsFactors=F)
+#high_outs<-read.csv("high_outs.csv",stringsAsFactors=F)
 bob<-high_outs
 
 ## Format data:
