@@ -2,7 +2,7 @@
 
 #### This code runs the MDS analyses ####
 
-# Written by K. Holtsinger
+# Written by K. Holsinger
 
 ######################################
 
