@@ -2,6 +2,12 @@
 
 #### This code takes the output of the UNEAK pipeline and processes it for further analyses ####
 
+# Original input: "HapMap.hmn.txt" (the alleles called in each individual) and "HapMap.hmc.txt" (the number of reads on which each call is based)
+
+# OUTPUT: 
+#   loci_20_v2.csv
+#   all_allele_frequencies_032417.csv
+
 ######################################
 
 #### Index of Script ####
@@ -174,7 +180,7 @@ outliers$reallyright<-as.numeric(outliers$right.column)+1
 noouts<-data[, -outliers$reallyright]
 
 # save the no outlier data for treemix analysis
-#write.table(noouts, "./intermediate_data/noouts_reallyright.csv", quote=FALSE, sep=",", row.names=FALSE, col.names=TRUE)
+#write.table(noouts, "./intermediate_data/noouts_data.csv", quote=FALSE, sep=",", row.names=FALSE, col.names=TRUE)
 
 
 # B) high outliers
@@ -190,7 +196,7 @@ high_outs<-data.frame(names=data$names, high_outs)
 #### 3. Make structure files for nonoutliers.  These will be used both for structure and for arlequin (after being read through PGD spider) ####
  
 ## Continue from above, or read in:
-#noouts<-read.csv("noouts_reallyright.csv",stringsAsFactors=F)
+#noouts<-read.csv("noouts_data.csv",stringsAsFactors=F)
 bob<-noouts
 
 ## Format data:
