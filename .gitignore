@@ -2,3 +2,6 @@
 .Rhistory
 .RData
 .Ruserdata
+HapMap.fas.txt
+HapMap.hmc.txt
+HapMap.hmn.txt
