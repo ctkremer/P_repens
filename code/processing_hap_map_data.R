@@ -180,7 +180,7 @@ outliers$reallyright<-as.numeric(outliers$right.column)+1
 noouts<-data[, -outliers$reallyright]
 
 # save the no outlier data for treemix analysis
-#write.table(noouts, "./intermediate_data/noouts_data.csv", quote=FALSE, sep=",", row.names=FALSE, col.names=TRUE)
+#write.table(noouts, "./data/noouts_data.csv", quote=FALSE, sep=",", row.names=FALSE, col.names=TRUE)
 
 
 # B) high outliers
@@ -354,5 +354,5 @@ allele_freq<-data.frame(pop=freq$pop.id,freq.mat)
 names(allele_freq)[2:ncol(allele_freq)]<-names(data)[2:ncol(data)]
 
 ## Save allele frequency results as intermediate data file:
-#write.csv(allele_freq,"./intermediate_data/all_allele_frequencies_032417.csv",row.names=F)
+#write.csv(allele_freq,"./data/all_allele_frequencies_032417.csv",row.names=F)
 

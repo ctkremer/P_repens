@@ -4,10 +4,6 @@
 
 # Written by K. Holtsinger
 
-# OUTPUT: 
-#   loci_20_v2.csv
-#   all_allele_frequencies_032417.csv
-
 ######################################
 
 ## Load required tools ##
@@ -93,7 +89,7 @@ set.colors.rb <- function(x, y) {
 #### 2. performing MDS analysis on FST of non-outlier markers (figure 2) ####
 
 ## Load data
-dat <- read.marker.data("./intermediate_data/noouts_data.csv")
+dat <- read.marker.data("./data/noouts_data.csv")
 
 ## Process it
 

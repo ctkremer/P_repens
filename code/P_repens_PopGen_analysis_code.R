@@ -69,11 +69,11 @@ library(gridExtra)
 library(dplyr)
 
 # Load data on allele frequencies in all populations (rows) by all markers (columns):
-afreq<-read.csv("./intermediate_data/all_allele_frequencies_032417.csv",stringsAsFactors = F)
+afreq<-read.csv("./data/all_allele_frequencies_032417.csv",stringsAsFactors = F)
 #afreq[1:5,1:6]
 
 # Load environmental PCA scores and other covariates for each population's location
-covars.dat<-read.csv("./intermediate_data/sample_PCA_and_covars.csv")
+covars.dat<-read.csv("./data/sample_PCA_and_covars.csv")
 
 # Split this into environmental/PCA variables
 envaxes<-covars.dat[,c("sample_names","Comp.1","Comp.2","Comp.3","Comp.4","Comp.5","Comp.6","Comp.7")]
@@ -257,7 +257,7 @@ write.csv(delt2,"pairwise_population_differences.csv",row.names = F)
 ####      a) Set up MCMCglmm analyses                                        ####
 
 # Load the pair-wise genetic distances and covariates for all 2066 markers:
-delt<-read.csv("./intermediate_data/pairwise_population_differences.csv")
+delt<-read.csv("./data/pairwise_population_differences.csv")
 #delt[1:5,1:15]
 
 # Goal: run an MCMCglmm model examining variation in genetic distances between populations
@@ -400,7 +400,7 @@ head(cf.data)
 cf.data[cf.data$marker=="TP26245",]
 
 # load input data
-delt<-read.csv("./intermediate_data/pairwise_population_differences.csv")
+delt<-read.csv("./data/pairwise_population_differences.csv")
 
 # pull data for focal marker
 loc<-which(names(delt)=="TP26245")
@@ -546,7 +546,7 @@ for(p in 1:5){
 #   - for details on code, see above section (3)
 
 # Read individual marker distances based on randomized allele frequencies
-delts<-read.csv("./intermediate_data/randomized_all_marker_deltas_for_analysis_v1.csv")
+delts<-read.csv("./data/randomized_all_marker_deltas_for_analysis_v1.csv")
 
 # Re-initialize function for running model sets, with new values for delts:
 markerglmm=function(x, nitt, burnin, thin){
@@ -639,7 +639,7 @@ head(sim1.data)
 #   - for details on code, see above section (3)
 
 # Read individual marker distances based on randomized allele frequencies
-delts<-read.csv("./intermediate_data/randomized_all_marker_deltas_for_analysis_v2.csv")
+delts<-read.csv("./data/randomized_all_marker_deltas_for_analysis_v2.csv")
 
 # Re-initialize function for running model sets, with new values for delts:
 markerglmm=function(x, nitt, burnin, thin){
@@ -732,7 +732,7 @@ head(sim2.data)
 #   - for details on code, see above section (3)
 
 # Read individual marker distances based on randomized allele frequencies
-delts<-read.csv("./intermediate_data/randomized_all_marker_deltas_for_analysis_v3.csv")
+delts<-read.csv("./data/randomized_all_marker_deltas_for_analysis_v3.csv")
 
 # Re-initialize function for running model sets, with new values for delts:
 markerglmm=function(x, nitt, burnin, thin){
@@ -825,7 +825,7 @@ head(sim3.data)
 #   - for details on code, see above section (3)
 
 # Read individual marker distances based on randomized allele frequencies
-delts<-read.csv("./intermediate_data/randomized_all_marker_deltas_for_analysis_v4.csv")
+delts<-read.csv("./data/randomized_all_marker_deltas_for_analysis_v4.csv")
 
 # Re-initialize function for running model sets, with new values for delts:
 markerglmm=function(x, nitt, burnin, thin){
@@ -918,7 +918,7 @@ head(sim4.data)
 #   - for details on code, see above section (3)
 
 # Read individual marker distances based on randomized allele frequencies
-delts<-read.csv("./intermediate_data/randomized_all_marker_deltas_for_analysis_v5.csv")
+delts<-read.csv("./data/randomized_all_marker_deltas_for_analysis_v5.csv")
 
 # Re-initialize function for running model sets, with new values for delts:
 markerglmm=function(x, nitt, burnin, thin){
@@ -1025,7 +1025,7 @@ write.csv(mod.results,"all_coefficient_estimates_combined.csv",row.names=F)
 ####    a) run GAM fits                                                     #####
 
 # load MCMCglmm model results
-cfs<-read.csv("./intermediate_data/all_coefficient_estimates_combined.csv")
+cfs<-read.csv("./data/all_coefficient_estimates_combined.csv")
 head(cfs)
 
 # remove non-outliers and observation with extremely high fst:

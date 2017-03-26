@@ -89,4 +89,4 @@ names(sample_axes)[1]<-"sample_names"
 
 
 #### Save this intermediate output, which supports subsequent analyses: ####
-#write.table(sample_axes, file="./intermediate_data/sample_PCA_and_covars.csv", quote=FALSE, sep=",", row.names=FALSE, col.names=TRUE)
+#write.table(sample_axes, file="./data/sample_PCA_and_covars.csv", quote=FALSE, sep=",", row.names=FALSE, col.names=TRUE)
